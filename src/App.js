@@ -12,7 +12,7 @@ class App extends Component {
       currentGuess: '',
       recentGuesses: [],//shows the numbers
       history: [],//total number of guesses?
-      currentFeedback: 'cold',
+      currentFeedback: '',
       feedback: ['hot', 'cold', 'super hot', 'super cold'],
       numberOfGuesses: 0
     }
@@ -24,19 +24,58 @@ class App extends Component {
     this.setState({
       currentGuess: event.target.value
     });
+    console.log(this.state.currentGuess);
   }
 
   handleSubmit(event) {
-    // const historyList = this.state.history + this.state.currentGuess
-    // const splitHistoryList = historyList.split('')
-    this.setState({
-      numberOfGuesses: this.state.numberOfGuesses+1,
-      currentGuess: '',
-      history: this.state.history + this.state.currentGuess//splitHistoryList
-    })
-    // if (this.state.currentGuess === this.state.currentNumber) {
-    //   alert('You win!')
-    // }
+    event.preventDefault();
+      if (Math.abs(this.state.currentGuess - this.state.currentNumber) < 1) {
+        alert('You won!'),
+        this.setState({
+          currentNumber: Math.floor(Math.random()*100),
+          currentGuess: '',
+          recentGuesses: [],
+          history: [],
+          currentFeedback: '',
+          feedback: ['hot', 'cold', 'super hot', 'super cold'],
+          numberOfGuesses: 0
+        })
+      } else if (Math.abs(this.state.currentGuess - this.state.currentNumber) < 5) {
+        this.setState({
+          numberOfGuesses: this.state.numberOfGuesses+1,
+          currentGuess: '',
+          currentFeedback: 'super hot',
+          history: this.state.history + this.state.currentGuess + ' '
+        })
+      } else if (Math.abs(this.state.currentGuess - this.state.currentNumber) < 10) {
+        this.setState({
+          numberOfGuesses: this.state.numberOfGuesses+1,
+          currentGuess: '',
+          currentFeedback: 'hot',
+          history: this.state.history + this.state.currentGuess + ' '
+        })
+      } else if (Math.abs(this.state.currentGuess - this.state.currentNumber) < 20) {
+          this.setState({
+            numberOfGuesses: this.state.numberOfGuesses+1,
+            currentGuess: '',
+            currentFeedback: 'pretty hot',
+            history: this.state.history + this.state.currentGuess + ' '
+          })
+      } else if (Math.abs(this.state.currentGuess - this.state.currentNumber) < 30) {
+          this.setState({
+            numberOfGuesses: this.state.numberOfGuesses+1,
+            currentGuess: '',
+            currentFeedback: 'warm',
+            history: this.state.history + this.state.currentGuess + ' '
+          })
+      } else if (Math.abs(this.state.currentGuess - this.state.currentNumber) > 30) {
+          this.setState({
+            numberOfGuesses: this.state.numberOfGuesses+1,
+            currentGuess: '',
+            currentFeedback: 'cold',
+            history: this.state.history + this.state.currentGuess + ' '
+          })
+        }
     event.preventDefault();
   }
 
