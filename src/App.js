@@ -8,11 +8,13 @@ class App extends Component {
     super();
 
     this.state = {
+      currentNumber: Math.floor(Math.random()*100),
       currentGuess: '',
       recentGuesses: [],//shows the numbers
       history: [],//total number of guesses?
-      currentFeedback: '',
-      feedback: ['hot', 'cold', 'super hot', 'super cold']
+      currentFeedback: 'cold',
+      feedback: ['hot', 'cold', 'super hot', 'super cold'],
+      numberOfGuesses: 0
     }
     this.updateCurrentGuess = this.updateCurrentGuess.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -25,11 +27,16 @@ class App extends Component {
   }
 
   handleSubmit(event) {
-    const input = event.target.value
-    console.log(input);
+    // const historyList = this.state.history + this.state.currentGuess
+    // const splitHistoryList = historyList.split('')
     this.setState({
-      history: this.state.history + input
+      numberOfGuesses: this.state.numberOfGuesses+1,
+      currentGuess: '',
+      history: this.state.history + this.state.currentGuess//splitHistoryList
     })
+    // if (this.state.currentGuess === this.state.currentNumber) {
+    //   alert('You win!')
+    // }
     event.preventDefault();
   }
 
@@ -43,16 +50,30 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <form onSubmit={this.handleSubmit}>
-         <label>
-           <input type="text"
-             value={this.state.currentGuess}
-             onChange={this.updateCurrentGuess}
-             onSubmit={this.handleSubmit}
-           />
-         </label>
-         <input type="submit" value="Submit" />
-       </form>
+
+            <div>
+              {/* box starts here */}
+              <div>
+                {this.state.currentFeedback}
+              </div>
+              <form onSubmit={this.handleSubmit}>
+                <label>
+                 <input type="text"
+                   value={this.state.currentGuess}
+                   onChange={this.updateCurrentGuess}
+                   onSubmit={this.handleSubmit}
+                 />
+               </label>
+               <input type="submit" value="Submit" />
+            </form>
+            <div>
+              Guess #{this.state.numberOfGuesses}
+            </div>
+            <div>
+              {this.state.history}
+            </div>
+          </div>
+
       </div>
     );
   }
