@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -12,7 +11,7 @@ class App extends Component {
       currentGuess: '',
       recentGuesses: [],//shows the numbers
       history: [],//total number of guesses?
-      currentFeedback: '',
+      currentFeedback: 'Make your guess!',
       feedback: ['hot', 'cold', 'super hot', 'super cold'],
       numberOfGuesses: 0
     }
@@ -77,41 +76,91 @@ class App extends Component {
           })
         }
     event.preventDefault();
-  }
+}
+
+    onNewGame(event) {
+        event.preventDefault();
+        if (this.props.onNewGame) {
+            this.props.onNewGame();
+        }
+    }
+
+    onInfo(event) {
+        event.preventDefault();
+        if (this.props.onInfo) {
+            this.props.onInfo();
+        }
+    }
+    onClose(event) {
+    event.preventDefault();
+    if (this.props.onClose) {
+        this.props.onClose();
+    }
+}
 
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <header>
+            <nav>
+                <ul className="clearfix">
+                    <li>
+                        <a className="what" href="#" onClick={e => this.onInfo(e)}>
+                            What?
+                        </a>
+                    </li>
+                    <li>
+                        <a className="new" href="#" onClick={e => this.onNewGame(e)}>
+                            + New Game
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+          <h1>HOT or COLD</h1>
+        </header>
 
-            <div>
-              {/* box starts here */}
-              <div>
+
+            <div className="game">
+              <div className='feedback'>
                 {this.state.currentFeedback}
               </div>
               <form onSubmit={this.handleSubmit}>
                 <label>
                  <input type="text"
+                   placeholder="Your guess here."
+                   className="userGuess text"
                    value={this.state.currentGuess}
                    onChange={this.updateCurrentGuess}
-                   onSubmit={this.handleSubmit}
-                 />
+                   onSubmit={this.handleSubmit}/>
                </label>
-               <input type="submit" value="Submit" />
+               <input type="submit"
+                 value="Submit"
+                 className="guessButton button"/>
             </form>
-            <div>
+            <div className="count">
               Guess #{this.state.numberOfGuesses}
             </div>
-            <div>
-              {this.state.history}
+            <div className="guessList guessBox clearfix">
+              <li>{this.state.history}</li>
             </div>
           </div>
+          <div className="overlay" id="modal">
+
+        <div className="content">
+              <h3>What do I do?</h3>
+              <div>
+                  <p>This is a Hot or Cold Number Guessing Game. The game goes like this: </p>
+                  <ul>
+                      <li>1. I pick a <strong>random secret number</strong> between 1 to 100 and keep it hidden.</li>
+                      <li>2. You need to <strong>guess</strong> until you can find the hidden secret number.</li>
+                      <li>3. You will <strong>get feedback</strong> on how close ("hot") or far ("cold") your guess is.</li>
+                  </ul>
+                  <p>So, Are you ready?</p>
+                  <a className="close" href="#" onClick={e => this.onClose(e)}>Got It!</a>
+              </div>
+          </div>
+      </div>
+
 
       </div>
     );
