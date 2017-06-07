@@ -33,7 +33,7 @@ class App extends Component {
   handleSubmit(event) {
     event.preventDefault();
       if (Math.abs(this.state.currentGuess - this.state.currentNumber) < 1) {
-        alert('You won!'),
+        alert('You won!')
         this.setState({
           currentNumber: Math.floor(Math.random()*100),
           currentGuess: '',
@@ -109,12 +109,12 @@ class App extends Component {
             <nav>
                 <ul className="clearfix">
                     <li>
-                        <a className="what" href="#" onClick={e => this.onInfo(e)}>
+                        <a className="what" href="#a" onClick={e => this.onInfo(e)}>
                             What?
                         </a>
                     </li>
                     <li>
-                        <a className="new" href="#" onClick={e => this.onNewGame(e)}>
+                        <a className="new" href="#a" onClick={e => this.onNewGame(e)}>
                             + New Game
                         </a>
                     </li>
@@ -160,7 +160,7 @@ class App extends Component {
                       <li>3. You will <strong>get feedback</strong> on how close ("hot") or far ("cold") your guess is.</li>
                   </ul>
                   <p>So, Are you ready?</p>
-                  <a className="close" href="#" onClick={e => this.onClose(e)}>Got It!</a>
+                  <a className="close" href="#a" onClick={e => this.onClose(e)}>Got It!</a>
               </div>
           </div>
       </div>
